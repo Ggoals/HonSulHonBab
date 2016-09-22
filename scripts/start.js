@@ -15,7 +15,7 @@ var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
 
 // Tools like Cloud9 rely on this.
-var DEFAULT_PORT = process.env.PORT || 3000;
+var DEFAULT_PORT = process.env.PORT || 8080;
 var compiler;
 var handleCompile;
 
@@ -91,7 +91,7 @@ function setupCompiler(port, protocol) {
       console.log();
       console.log('The app is running at:');
       console.log();
-      console.log('  ' + chalk.cyan(protocol + '://localhost:' + port + '/'));
+      console.log('  ' + chalk.cyan(protocol + '://0.0.0.0:' + port + '/'));
       console.log();
       console.log('Note that the development build is not optimized.');
       console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
@@ -149,7 +149,7 @@ function openBrowser(port, protocol) {
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync(
-        'osascript chrome.applescript ' + protocol + '://localhost:' + port + '/',
+        'osascript chrome.applescript ' + protocol + '://0.0.0.0:' + port + '/',
         {cwd: path.join(__dirname, 'utils'), stdio: 'ignore'}
       );
       return;
@@ -159,7 +159,7 @@ function openBrowser(port, protocol) {
   }
   // Fallback to opn
   // (It will always open new tab)
-  opn(protocol + '://localhost:' + port + '/');
+  opn(protocol + '://0.0.0.0:' + port + '/');
 }
 
 // We need to provide a custom onError function for httpProxyMiddleware.
@@ -279,14 +279,17 @@ function runDevServer(port, protocol) {
       ignored: /node_modules/
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === "https" ? true : false
+    https: protocol === "https" ? true : false,
+    proxy : {
+      '*' : 'http://localhost:8081'
+    }
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.
   addMiddleware(devServer);
 
   // Launch WebpackDevServer.
-  devServer.listen(port, (err, result) => {
+  devServer.listen(port, '0.0.0.0', (err, result) => {
     if (err) {
       return console.log(err);
     }

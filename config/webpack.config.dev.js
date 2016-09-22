@@ -29,11 +29,12 @@ module.exports = {
     // route like /todos/42 would make it wrongly request /todos/42/sockjs-node.
     // The socket server is a part of WebpackDevServer which we are using.
     // The /sockjs-node/ path I'm referring to is hardcoded in WebpackDevServer.
-    require.resolve('webpack-dev-server/client') + '?/',
+    require.resolve('webpack-dev-server/client') + '?http://0.0.0.0:8080',
     // Include Webpack hot module replacement runtime. Webpack is pretty
     // low-level so we need to put all the pieces together. The runtime listens
     // to the events received by the client above, and applies updates (such as
     // new CSS) to the running application.
+    //require.resolve('webpack/hot/only-dev-server'),
     require.resolve('webpack/hot/dev-server'),
     // We ship a few polyfills by default.
     require.resolve('./polyfills'),
@@ -95,8 +96,8 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
-        loader: 'babel',
-        query: require('./babel.dev')
+        loaders: ['react-hot', 'babel?' + JSON.stringify(require('./babel.dev'))]
+        //query: require('./babel.dev')
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
