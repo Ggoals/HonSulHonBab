@@ -279,10 +279,11 @@ function runDevServer(port, protocol) {
       ignored: /node_modules/
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === "https" ? true : false,
-    proxy : {
-      '*' : 'http://localhost:8081'
-    }
+    https: protocol === "https" ? true : false
+    // historyApiFallback: true,
+    // proxy : {
+    //   '**' : 'http://localhost:8081'
+    // }
   });
 
   // Our custom middleware proxies requests to /index.html or a remote API.
