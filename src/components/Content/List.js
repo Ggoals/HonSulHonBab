@@ -28,7 +28,7 @@ class ContentListComponent extends Component {
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem
                             expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni
                             pariatur quos perspiciatis atque eveniet unde.</p>
-                        <Link to="detail" className="btn btn-primary">View Project
+                        <Link to="/3" className="btn btn-primary">View Project
                             <span className="glyphicon glyphicon-chevron-right"></span></Link>
                     </div>
                 </div>
