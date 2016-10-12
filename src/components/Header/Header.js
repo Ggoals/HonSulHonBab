@@ -2,9 +2,18 @@
  * Created by 1002720 on 2016. 9. 23..
  */
 import React from 'react';
+import { Link } from 'react-router'
 
 class HeaderComponent extends React.Component {
     render() {
+        const loginLink = (
+            <Link to="/signin">Login</Link>
+        );
+
+        const logoutLink = (
+            <Link to="/">Logout</Link>
+        );
+
         return (
             <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div className="container">
@@ -28,6 +37,9 @@ class HeaderComponent extends React.Component {
                             <li>
                                 <a href="#">Contact</a>
                             </li>
+                            <li>
+                                { this.props.isLogin ? logoutLink : loginLink }
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -36,5 +48,13 @@ class HeaderComponent extends React.Component {
 
     }
 }
+
+HeaderComponent.propTypes = {
+    isLogin : React.PropTypes.bool
+};
+HeaderComponent.defaultProps = {
+    isLogin : false
+};
+
 
 export default HeaderComponent;
